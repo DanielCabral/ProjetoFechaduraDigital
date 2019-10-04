@@ -24,25 +24,22 @@
     <div class="row col-md-6 col-md-offset-2 custyle">
     <table class="table table-striped custab">
     <thead>
-    <a href="cadastroFechadura.html" class="btn btn-primary btn-xs pull-right"><b>+</b> Adicionar novas fechaduras</a>
-        <tr>
-            <th>Nome</th>
-            <th>Codigo Mac</th>
-            <th>Estado</th>
+    <a href="cadastroUsuario.html" class="btn btn-primary btn-xs pull-right"><b>+</b> Adicionar nova permissão de acesso</a>
+        <tr><th>Nome do Usuario</th>
+            <th>Nome do Sala</th>
             <th class="text-center">Opções</th>
         </tr>
     </thead>
             <?php
              include_once 'conexao.php';
-             $consulta = $PDO->query("SELECT * FROM fechadura;");
+             $consulta = $PDO->query("SELECT u.nome as u_nome,f.nome as f_nome,u.codigo as codigo,f.codigo as f_codigo FROM usuario as u,fechadura as f,tem_acessa where fk_Usuario_codigo=u.codigo and fk_Fechadura_codigo=f.codigo;");
              $count = $consulta->rowCount();            
              if($count>0){
                 while ($row = $consulta->fetch(PDO::FETCH_ASSOC)) {
                 echo "<tr>
-                <td>".$row['nome']."</td>
-                <td>".$row['codigo']."</td>
-                <td>".$row['estado']."</td>
-                <td class=\"text-center\"><a class='btn btn-info btn-xs' href=\"editarFechadura.php?codigo=".$row['codigo']."\"><span class=\"glyphicon glyphicon-edit\"></span> Editar</a> <a href=\"excluirFechadura.php?codigo=".$row['codigo']."\" class=\"btn btn-danger btn-xs\"><span class=\"glyphicon glyphicon-remove\"></span> Excluir</a></td>
+                <td>".$row['u_nome']."</td>
+                <td>".$row['f_nome']."</td>
+                <td class=\"text-center\"><a class='btn btn-info btn-xs' href=\"editarUsuario.php?codigo=".$row['codigo']."\"><span class=\"glyphicon glyphicon-edit\"></span> Editar</a> <a href=\"excluirUsuario.php?codigo=".$row['codigo']."\" class=\"btn btn-danger btn-xs\"><span class=\"glyphicon glyphicon-remove\"></span> Excluir</a></td>
                 </tr>";
                 }
             } else {

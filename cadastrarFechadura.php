@@ -8,11 +8,11 @@
       $estado = $_POST['estado'];
       
       try{
-         $sql = "INSERT INTO fechadura (nome,codigo,estado,fk_Admin_email) VALUES (?,?,?,?)";
+         $sql = "INSERT INTO fechadura(nome,codigo,estado,fk_Cliente_email) VALUES (?,?,?,?)";
          $stmt= $PDO->prepare($sql);
-         $stmt->execute([$nome,$codigo,$estado, $_SESSION['usuario']]);
-         if($stmt){
-            header('location: home.php');
+         //$stmt->execute([$nome,$codigo,$estado, $_SESSION['usuario']]);
+         if ($stmt->execute([$nome,$codigo,$estado, $_SESSION['usuario']])){
+            header('location: exibirFechaduras.php');
          }
       }catch(PDOException $erro){
          echo $erro;

@@ -8,7 +8,7 @@ if(isset($_SESSION['usuario'])){
         $email=$_POST['email'];
         $senha=$_POST['senha'];
         include_once 'conexao.php';
-        $consulta = $PDO->query("SELECT email FROM admin where email='".$email."' and senha=".$senha.";");
+        $consulta = $PDO->query("SELECT email FROM cliente where email='".$email."' and senha=".$senha.";");
 
             $count = $consulta->rowCount();            
             if($count>0){
@@ -129,22 +129,43 @@ body {
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input type="text" name="email" class="form-control" placeholder="Email">
+                    <input type="text" id="email" name="email" class="form-control" placeholder="Email">
                 </div>
 
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input type="password" name="senha" class="form-control" placeholder="Senha">
+                    <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha">
                 </div>
 
                 <div class="form-group">
+                    <!--<button type="button" class="btn btn-outline-danger float-right login_btn" onclick="logar()">Login</button>-->
                     <input type="submit" name="btn" value="Login" class="btn btn-outline-danger float-right login_btn">
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+function logar() {
+    var email=document.getElementById("email");
+    var senha=document.getElementById("senha");
+    console.log(email.value);
+    console.log(senha.value);
+    if (senha.value.length < 4) {
+       alert("Senha precisa ter ao menos 4 caracteres");
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "gethint.php?q=" + email.value+"", true);
+        xmlhttp.send();
+    }
+}
+</script>
 </body>
 </html>
